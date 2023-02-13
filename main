@@ -1,0 +1,70 @@
+#include <iostream>
+#include <unistd.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <list>
+#include <iterator>
+
+using namespace std;
+
+int main(int argc, char** argv)
+{
+    pid_t processID;
+    int childincrement = 0;
+    int parentID;
+    list<pid_t> PIDlist;
+    list<pid_t> parentIDList;
+    list<string> programIDs;
+    int childnum = int(*argv[1]);
+    const char *programIDnames[20] = { "./test_1.exe", "./test_2.exe", "./test_3.exe", "./test_4.exe", "./test_5.exe"};
+
+
+    for (int increment = 0; increment < (childnum - 48); increment++)
+    {
+
+        processID = fork();
+
+        childincrement++;
+        // cout << "Process ID Following Fork:" << processID << "\n";
+
+        // cout << "Child ID: " << getpid() << "\n";
+
+        // cout << "Child ID: " << getppid() << "\n";
+
+        if (processID == 0)
+        {
+
+
+            int randval = rand() % sizeof(programIDnames);
+
+            //cout << "Started Child " << childincrement << "with ID:  " << getpid() << "\n";
+
+            printf("Started Child ID %d with ID: %d\n", childincrement, getpid());
+
+          //  advance(programIDs, randval);
+
+            PIDlist.push_back(getpid());
+
+           // execv(programIDnames[randval], (const char*)"test");
+
+           //execlp(programIDnames[randval], "test", NULL);
+
+           //cout << "Child ID: " << getpid();
+            exit(0);
+
+        }
+
+        else
+        {
+
+                wait(NULL);
+                cout << "Parent ID: " << getppid() << "\n";
+
+        }
+
+    }
+
+
+}
