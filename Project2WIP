@@ -1,0 +1,120 @@
+include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <sys/queue.h>
+//OVERVIEW:
+
+//Typical input: ./prog2 10(size of buffer) 5(number of PThreads) 3(Number of CThreads) 
+
+
+typedef struct Monitor {
+//monitor structure
+//Requires: 
+// - Shared buffer holding integer data
+// - Any other variables required to manage the state of the buffer
+// - Any primitives required to synchronize accesses to the buffer
+
+int bufferSize;
+int numPThreads;
+int numCThreads;
+int ProConbuffer[atoi(argv[1])];
+
+} Monitor;
+
+int main(int agrc, char* argv[])
+{
+    Monitor Monitor;
+    /*if ((argv[1] - argv[argc-1] != 3))
+    {
+    //user input is required to specify the number of PThreads, CThreads & 				Buffer (3 inputs).
+    printf("Error: Input does not meet requirements.");
+    return 1;
+    }
+    */
+    
+    //Message for New Thread (Producer/Consumer) Here!
+    
+    //Message for threads joining (@ end of program) Here!
+    
+    //"Program is complete"
+    printf("Hello World!\n");
+    
+    
+    Monitor.bufferSize = atoi(argv[1]);
+    Monitor.numPThreads = atoi(argv[2]);
+    Monitor.numCThreads = atoi(argv[3]);
+    
+    produce(Monitor.bufferSize, Monitor.numPThreads, Monitor.numCThreads);
+    //produce(atoi(argv[1]), atoi(argv[2]), atoi(argv[3]));
+    return 0;
+}
+
+void produce(int buffer, int PThreads, int CThreads) 
+{
+Monitor monitor;
+//Given user input, generate number of random values between 1 - 10, adding every
+//value to the buffer.
+
+//I.e User Input: 5, Output: "1, 8, 2, 5, 2"
+
+//Print number of threads here
+
+//print value added to buffer & position in buffer
+
+//If full, print message when thread blocks & when it is woken up and continues executing
+
+//Before execting, print finished thread.
+
+//printf("(Location: Produce) Size of Buffer: %d \n", buffer);
+//printf("(Location: Produce) PThreads: %d \n", PThreads);
+//printf("(Location: Produce) CThreads: %d \n", CThreads);
+print("Producing %d values", buffer);
+int randVal;
+srand(time(0));
+
+for (int increment = 0; increment < buffer; increment++) 
+{
+	randVal = rand() % 11; //get random value between 0 - 10 using "truly random" seed
+	monitor.ProConbuffer[increment] = randVal;
+	printf("Writing %d to position %d\n", randVal, increment);
+	//Monitor->q.push(randVal);
+}
+
+//test loop
+for (int testincrement = 0; testincrement < 10; testincrement++) 
+{
+
+printf("Buffer Value %d: %d\n", testincrement, monitor.ProConbuffer[testincrement]);
+
+}
+
+}
+
+void consume() 
+{
+//Read given number of values from buffer, print each value as it is read
+//Buffer will utilize FIFO (First in - First out). 
+//If buffer is empty, consumer must wait until a value is present.
+
+//Number of values consumed is based on number of values produced.
+//Consumer threads should read ALL data written to the buffer.
+
+//*Recommended - Divide total number of values EVENLY across all consumer threads
+//... with one thread responsible for any extra values.
+
+//Print number of values to be consumed
+
+//print value & position of consumed value
+
+//if buffer empty, print message, also print message when fixed
+
+//before exiting, print thread message for finish
+
+//Consumer Algorithm: 
+
+//Num values = buffer * PThreads
+
+//hypothetically: buffer = 10, PThreads = 5 CThreads = 8
+
+//NUm Values = 50, if 50 % 8 != 0, then add that remainder (?)
+}
